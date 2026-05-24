@@ -658,6 +658,47 @@
 	  opacity: 1;
 	  transform: translateX(0) scale(1);
 	}
+
+	.idea-bulb {
+	  position: absolute;
+	  right: 10vw;
+	  bottom: 36vh;
+	  z-index: 19;
+	  width: clamp(42px, 7vw, 86px);
+	  opacity: 0;
+	  transform: translateY(10px) scale(0.4) rotate(-8deg);
+	  filter:
+	    drop-shadow(0 0 8px rgba(255, 240, 120, 0.75))
+	    drop-shadow(0 0 18px rgba(255, 210, 80, 0.45));
+	  transition:
+	    opacity 0.45s ease,
+	    transform 0.55s cubic-bezier(0.2, 1.4, 0.4, 1);
+	  pointer-events: none;
+	  user-select: none;
+	  -webkit-user-drag: none;
+	}
+	
+	.idea-bulb.is-visible {
+	  opacity: 1;
+	  transform: translateY(0) scale(1) rotate(0deg);
+	  animation: ideaPulse 1.15s ease-in-out infinite 0.5s;
+	}
+	
+	@keyframes ideaPulse {
+	  0%, 100% {
+	    filter:
+	      drop-shadow(0 0 8px rgba(255, 240, 120, 0.75))
+	      drop-shadow(0 0 18px rgba(255, 210, 80, 0.45));
+	    transform: translateY(0) scale(1);
+	  }
+	
+	  50% {
+	    filter:
+	      drop-shadow(0 0 13px rgba(255, 245, 150, 0.95))
+	      drop-shadow(0 0 28px rgba(255, 220, 95, 0.65));
+	    transform: translateY(-4px) scale(1.08);
+	  }
+	}
   </style>
 </head>
 
@@ -697,6 +738,8 @@
       </div>
 	  
 	  <img id="treeCharacter" class="tree-character" src="img/personaje-arbol.png" alt="">
+	  
+	  <img id="ideaBulb" class="idea-bulb" src="img/bombilla-idea.png" alt="">
 
       <img class="scene-two-tree-front" src="img/escena2-arbol-frente.png" alt="">
     </section>
@@ -709,9 +752,11 @@
     const RUNNER_COLUMNS = 7;
     const RUNNER_FRAME_DURATION = 60;
 	const treeCharacter = document.getElementById("treeCharacter");
+	const ideaBulb = document.getElementById("ideaBulb");
 
 	let runnerLaps = 0;
 	let treeCharacterShown = false;
+	let ideaBulbShown = false;
 
     const characterStates = [
       "img/personaje-normal.png",
@@ -727,7 +772,8 @@
       "img/escena2-fondo.png",
       "img/escena2-arbol-frente.png",
       "img/ciudad-delantera.png",
-	  "img/personaje-arbol.png"
+	  "img/personaje-arbol.png",
+	  "img/bombilla-idea.png"
     ];
 
     const balloons = [
@@ -985,6 +1031,11 @@
 	  if (runnerLaps >= 2 && !treeCharacterShown) {
 		treeCharacterShown = true;
 		treeCharacter.classList.add("is-visible");
+	  }
+
+	  if (runnerLaps >= 4 && !ideaBulbShown) {
+	    ideaBulbShown = true;
+	    ideaBulb.classList.add("is-visible");
 	  }
 
 	  if (event.animationName === "runLeftToRight") {
