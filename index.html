@@ -611,63 +611,44 @@
     .thought-cloud-line {
       fill: none;
       stroke: #111;
-      stroke-width: 6.5;
+      stroke-width: 7;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
-    .thought-cloud-line.is-soft {
-      stroke-width: 3.2;
-      opacity: 0.72;
-    }
-
-    .thought-bubble-inner {
+    .thought-puff {
       position: absolute;
-      left: 13%;
-      top: 23%;
-      z-index: 2;
-      width: 74%;
-      height: 48%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #111;
-      font-size: clamp(0.9rem, 2vw, 1.32rem);
-      line-height: 1.1;
-      text-align: center;
-      font-weight: 700;
-    }
-
-    .thought-dot {
-      position: absolute;
-      border: 4px solid #111;
-      border-radius: 50%;
       background: #fff;
+      border: 4px solid #111;
       z-index: 2;
-      box-shadow:
-        1px 0 0 #111,
-        -1px 1px 0 rgba(0, 0, 0, 0.32);
+      box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.18);
     }
 
-    .thought-dot-one {
-      width: clamp(24px, 3.8vw, 42px);
-      height: clamp(24px, 3.8vw, 42px);
-      right: 10%;
-      bottom: -6%;
+    .thought-puff-one {
+      width: clamp(30px, 4.5vw, 48px);
+      height: clamp(23px, 3.7vw, 38px);
+      right: 13%;
+      bottom: -5%;
+      border-radius: 58% 42% 52% 48% / 48% 58% 42% 52%;
+      transform: rotate(4deg);
     }
 
-    .thought-dot-two {
-      width: clamp(17px, 2.7vw, 29px);
-      height: clamp(17px, 2.7vw, 29px);
-      right: 6.5%;
-      bottom: -14%;
+    .thought-puff-two {
+      width: clamp(22px, 3.4vw, 36px);
+      height: clamp(18px, 2.8vw, 29px);
+      right: 9%;
+      bottom: -13%;
+      border-radius: 46% 54% 58% 42% / 56% 44% 50% 50%;
+      transform: rotate(-8deg);
     }
 
-    .thought-dot-three {
-      width: clamp(10px, 1.7vw, 18px);
+    .thought-puff-three {
+      width: clamp(13px, 2.2vw, 22px);
       height: clamp(10px, 1.7vw, 18px);
-      right: 4%;
-      bottom: -22%;
+      right: 6%;
+      bottom: -20%;
+      border-radius: 55% 45% 50% 50% / 44% 58% 42% 56%;
+      transform: rotate(9deg);
     }
 
     @keyframes thoughtFloat {
@@ -701,26 +682,22 @@
       }
 
       .thought-cloud-line {
-        stroke-width: 6;
+        stroke-width: 6.5;
       }
 
-      .thought-cloud-line.is-soft {
-        stroke-width: 2.8;
+      .thought-puff-one {
+        right: 12%;
+        bottom: -4%;
       }
 
-      .thought-dot-one {
-        right: 9.5%;
-        bottom: -5%;
+      .thought-puff-two {
+        right: 8.5%;
+        bottom: -11%;
       }
 
-      .thought-dot-two {
-        right: 6%;
-        bottom: -12%;
-      }
-
-      .thought-dot-three {
-        right: 3.7%;
-        bottom: -19%;
+      .thought-puff-three {
+        right: 5.8%;
+        bottom: -18%;
       }
     }
 
@@ -869,47 +846,11 @@
                C219 289 168 275 163 236
                C148 229 130 225 113 223"
           />
-          <path
-            class="thought-cloud-line is-soft"
-            d="M117 214
-               C77 217 51 191 57 157
-               M128 99
-               C133 76 157 61 184 62
-               M206 54
-               C229 38 262 37 286 57
-               M303 55
-               C327 45 356 54 373 78
-               M390 82
-               C423 78 445 100 446 130
-               M447 218
-               C456 245 432 265 404 260
-               M344 252
-               C320 278 279 277 256 253
-               M238 253
-               C211 276 176 267 168 235"
-          />
-          <path
-            class="thought-cloud-line is-soft"
-            d="M102 122
-               l18 -9
-               M108 113
-               l13 17
-               M93 134
-               l35 -19
-               M99 142
-               l35 -19
-               M115 103
-               l-7 35
-               M127 102
-               l-7 35"
-          />
         </svg>
 
-        <div class="thought-bubble-inner"></div>
-
-        <span class="thought-dot thought-dot-one"></span>
-        <span class="thought-dot thought-dot-two"></span>
-        <span class="thought-dot thought-dot-three"></span>
+        <span class="thought-puff thought-puff-one"></span>
+        <span class="thought-puff thought-puff-two"></span>
+        <span class="thought-puff thought-puff-three"></span>
       </div>
 
       <img class="scene-two-tree-front" src="img/escena2-arbol-frente.png" alt="">
