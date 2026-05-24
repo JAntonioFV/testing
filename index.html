@@ -575,23 +575,19 @@
 
     .thought-bubble {
       position: absolute;
-      right: 12vw;
-      bottom: 52vh;
+      right: 8vw;
+      bottom: 48vh;
       z-index: 35;
-      width: clamp(230px, 38vw, 430px);
-      min-height: clamp(120px, 18vw, 200px);
-      padding: clamp(18px, 3vw, 30px);
-      border: 5px solid #111;
-      border-radius: 44px;
-      background: #fff;
+      width: clamp(260px, 44vw, 520px);
+      aspect-ratio: 1.42 / 1;
       opacity: 0;
-      transform: translateY(14px) scale(0.86);
+      transform: translateY(16px) scale(0.82);
       transition:
-        opacity 0.5s ease,
-        transform 0.65s cubic-bezier(0.2, 1.25, 0.4, 1);
+        opacity 0.55s ease,
+        transform 0.72s cubic-bezier(0.2, 1.35, 0.4, 1);
       pointer-events: none;
       user-select: none;
-      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.16));
+      filter: drop-shadow(0 7px 10px rgba(0, 0, 0, 0.16));
     }
 
     .thought-bubble.is-visible {
@@ -600,58 +596,66 @@
       animation: thoughtFloat 3.2s ease-in-out infinite 0.8s;
     }
 
-    .thought-bubble::before,
-    .thought-bubble::after {
-      content: "";
+    .thought-cloud-svg {
       position: absolute;
-      border: 4px solid #111;
-      border-radius: 50%;
-      background: #fff;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
     }
 
-    .thought-bubble::before {
-      width: clamp(26px, 4.5vw, 48px);
-      height: clamp(26px, 4.5vw, 48px);
-      right: 18%;
-      bottom: -48px;
-    }
-
-    .thought-bubble::after {
-      width: clamp(14px, 2.7vw, 28px);
-      height: clamp(14px, 2.7vw, 28px);
-      right: 10%;
-      bottom: -82px;
-    }
-
-    .bubble-lobe {
-      display: none;
+    .thought-cloud-shape {
+      fill: #fff;
+      stroke: #111;
+      stroke-width: 9;
+      stroke-linejoin: round;
+      stroke-linecap: round;
     }
 
     .thought-bubble-inner {
-      position: relative;
+      position: absolute;
+      left: 13%;
+      top: 20%;
       z-index: 2;
-      width: 100%;
-      min-height: clamp(84px, 13vw, 140px);
+      width: 74%;
+      height: 52%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #111;
-      font-size: clamp(0.95rem, 2.3vw, 1.45rem);
+      font-size: clamp(0.95rem, 2.25vw, 1.5rem);
       line-height: 1.15;
       text-align: center;
       font-weight: 700;
     }
 
-    .thought-bubble-inner::after {
-      content: "";
+    .thought-dot {
       position: absolute;
-      right: 4%;
-      bottom: -54px;
-      width: clamp(9px, 1.8vw, 18px);
-      height: clamp(9px, 1.8vw, 18px);
-      border: 3px solid #111;
+      border: 5px solid #111;
       border-radius: 50%;
       background: #fff;
+      z-index: 2;
+    }
+
+    .thought-dot-one {
+      width: clamp(34px, 5.4vw, 58px);
+      height: clamp(34px, 5.4vw, 58px);
+      right: 20%;
+      bottom: -18%;
+    }
+
+    .thought-dot-two {
+      width: clamp(22px, 3.6vw, 38px);
+      height: clamp(22px, 3.6vw, 38px);
+      right: 12%;
+      bottom: -34%;
+    }
+
+    .thought-dot-three {
+      width: clamp(13px, 2.2vw, 24px);
+      height: clamp(13px, 2.2vw, 24px);
+      right: 6%;
+      bottom: -48%;
     }
 
     @keyframes thoughtFloat {
@@ -660,7 +664,7 @@
       }
 
       50% {
-        transform: translateY(-5px) scale(1.015);
+        transform: translateY(-5px) scale(1.012);
       }
     }
 
@@ -679,11 +683,13 @@
       }
 
       .thought-bubble {
-        right: 6vw;
-        bottom: 55vh;
-        width: clamp(210px, 72vw, 340px);
-        min-height: 120px;
-        border-radius: 34px;
+        right: 4vw;
+        bottom: 52vh;
+        width: clamp(250px, 82vw, 390px);
+      }
+
+      .thought-cloud-shape {
+        stroke-width: 8;
       }
     }
 
@@ -799,15 +805,32 @@
       <img id="treeCharacter" class="tree-character" src="img/personaje-arbol.png" alt="">
 
       <div id="thoughtBubble" class="thought-bubble" aria-hidden="true">
-        <span class="bubble-lobe lobe-one"></span>
-        <span class="bubble-lobe lobe-two"></span>
-        <span class="bubble-lobe lobe-three"></span>
-        <span class="bubble-lobe lobe-four"></span>
-        <span class="bubble-lobe lobe-five"></span>
+        <svg class="thought-cloud-svg" viewBox="0 0 520 360" aria-hidden="true">
+          <path
+            class="thought-cloud-shape"
+            d="M112 238
+               C64 238 28 205 30 164
+               C32 126 68 98 111 104
+               C120 66 156 42 196 50
+               C218 18 267 12 300 42
+               C330 20 377 28 398 63
+               C438 57 475 82 483 121
+               C523 136 533 188 500 219
+               C517 257 487 300 445 298
+               C421 337 366 335 343 300
+               C315 333 259 332 238 296
+               C203 329 145 304 146 259
+               C136 267 123 238 112 238 Z"
+          />
+        </svg>
 
         <div class="thought-bubble-inner">
           Aquí irá la mini historia
         </div>
+
+        <span class="thought-dot thought-dot-one"></span>
+        <span class="thought-dot thought-dot-two"></span>
+        <span class="thought-dot thought-dot-three"></span>
       </div>
 
       <img class="scene-two-tree-front" src="img/escena2-arbol-frente.png" alt="">
