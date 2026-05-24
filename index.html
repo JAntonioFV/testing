@@ -575,11 +575,11 @@
 
     .thought-bubble {
       position: absolute;
-      right: 8vw;
-      bottom: 48vh;
+      right: 10vw;
+      bottom: 50vh;
       z-index: 35;
-      width: clamp(260px, 44vw, 520px);
-      aspect-ratio: 1.42 / 1;
+      width: clamp(245px, 38vw, 430px);
+      aspect-ratio: 1.58 / 1;
       opacity: 0;
       transform: translateY(16px) scale(0.82);
       transition:
@@ -587,7 +587,7 @@
         transform 0.72s cubic-bezier(0.2, 1.35, 0.4, 1);
       pointer-events: none;
       user-select: none;
-      filter: drop-shadow(0 7px 10px rgba(0, 0, 0, 0.16));
+      filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.14));
     }
 
     .thought-bubble.is-visible {
@@ -604,57 +604,69 @@
       overflow: visible;
     }
 
-    .thought-cloud-shape {
+    .thought-cloud-fill {
       fill: #fff;
+    }
+
+    .thought-cloud-line {
+      fill: none;
       stroke: #111;
-      stroke-width: 9;
-      stroke-linejoin: round;
+      stroke-width: 6.5;
       stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .thought-cloud-line.is-soft {
+      stroke-width: 3.2;
+      opacity: 0.72;
     }
 
     .thought-bubble-inner {
       position: absolute;
       left: 13%;
-      top: 20%;
+      top: 23%;
       z-index: 2;
       width: 74%;
-      height: 52%;
+      height: 48%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #111;
-      font-size: clamp(0.95rem, 2.25vw, 1.5rem);
-      line-height: 1.15;
+      font-size: clamp(0.9rem, 2vw, 1.32rem);
+      line-height: 1.1;
       text-align: center;
       font-weight: 700;
     }
 
     .thought-dot {
       position: absolute;
-      border: 5px solid #111;
+      border: 4px solid #111;
       border-radius: 50%;
       background: #fff;
       z-index: 2;
+      box-shadow:
+        1px 0 0 #111,
+        -1px 1px 0 rgba(0, 0, 0, 0.32);
     }
 
     .thought-dot-one {
-      width: clamp(34px, 5.4vw, 58px);
-      height: clamp(34px, 5.4vw, 58px);
-      right: 20%;
+      width: clamp(28px, 4.4vw, 46px);
+      height: clamp(28px, 4.4vw, 46px);
+      right: 18%;
       bottom: -18%;
     }
 
     .thought-dot-two {
-      width: clamp(22px, 3.6vw, 38px);
-      height: clamp(22px, 3.6vw, 38px);
-      right: 12%;
+      width: clamp(20px, 3.2vw, 32px);
+      height: clamp(20px, 3.2vw, 32px);
+      right: 10%;
       bottom: -34%;
     }
 
     .thought-dot-three {
-      width: clamp(13px, 2.2vw, 24px);
-      height: clamp(13px, 2.2vw, 24px);
-      right: 6%;
+      width: clamp(12px, 2vw, 20px);
+      height: clamp(12px, 2vw, 20px);
+      right: 4%;
       bottom: -48%;
     }
 
@@ -664,7 +676,7 @@
       }
 
       50% {
-        transform: translateY(-5px) scale(1.012);
+        transform: translateY(-5px) scale(1.01);
       }
     }
 
@@ -683,13 +695,17 @@
       }
 
       .thought-bubble {
-        right: 4vw;
-        bottom: 52vh;
-        width: clamp(250px, 82vw, 390px);
+        right: 5vw;
+        bottom: 53vh;
+        width: clamp(230px, 76vw, 350px);
       }
 
-      .thought-cloud-shape {
-        stroke-width: 8;
+      .thought-cloud-line {
+        stroke-width: 6;
+      }
+
+      .thought-cloud-line.is-soft {
+        stroke-width: 2.8;
       }
     }
 
@@ -805,22 +821,72 @@
       <img id="treeCharacter" class="tree-character" src="img/personaje-arbol.png" alt="">
 
       <div id="thoughtBubble" class="thought-bubble" aria-hidden="true">
-        <svg class="thought-cloud-svg" viewBox="0 0 520 360" aria-hidden="true">
+        <svg class="thought-cloud-svg" viewBox="0 0 520 330" aria-hidden="true">
           <path
-            class="thought-cloud-shape"
-            d="M112 238
-               C64 238 28 205 30 164
-               C32 126 68 98 111 104
-               C120 66 156 42 196 50
-               C218 18 267 12 300 42
-               C330 20 377 28 398 63
-               C438 57 475 82 483 121
-               C523 136 533 188 500 219
-               C517 257 487 300 445 298
-               C421 337 366 335 343 300
-               C315 333 259 332 238 296
-               C203 329 145 304 146 259
-               C136 267 123 238 112 238 Z"
+            class="thought-cloud-fill"
+            d="M112 225
+               C66 224 36 194 42 155
+               C47 120 81 96 119 103
+               C126 67 162 46 197 55
+               C219 28 263 24 291 50
+               C318 33 358 42 378 72
+               C415 68 450 92 456 127
+               C489 136 503 176 481 205
+               C498 240 467 276 429 269
+               C407 299 362 294 345 264
+               C319 294 269 291 250 260
+               C219 289 168 275 163 236
+               C147 229 130 226 112 225 Z"
+          />
+          <path
+            class="thought-cloud-line"
+            d="M113 223
+               C65 224 35 194 42 154
+               C49 114 85 94 119 103
+               C124 67 161 45 198 55
+               C220 28 265 24 292 51
+               C321 31 359 44 379 73
+               C416 68 452 93 456 129
+               C489 136 503 178 480 207
+               C497 239 466 276 429 268
+               C406 299 361 294 345 264
+               C318 294 269 291 250 260
+               C219 289 168 275 163 236
+               C148 229 130 225 113 223"
+          />
+          <path
+            class="thought-cloud-line is-soft"
+            d="M117 214
+               C77 217 51 191 57 157
+               M128 99
+               C133 76 157 61 184 62
+               M206 54
+               C229 38 262 37 286 57
+               M303 55
+               C327 45 356 54 373 78
+               M390 82
+               C423 78 445 100 446 130
+               M447 218
+               C456 245 432 265 404 260
+               M344 252
+               C320 278 279 277 256 253
+               M238 253
+               C211 276 176 267 168 235"
+          />
+          <path
+            class="thought-cloud-line is-soft"
+            d="M102 122
+               l18 -9
+               M108 113
+               l13 17
+               M93 134
+               l35 -19
+               M99 142
+               l35 -19
+               M115 103
+               l-7 35
+               M127 102
+               l-7 35"
           />
         </svg>
 
