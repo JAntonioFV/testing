@@ -552,6 +552,146 @@
       }
     }
 
+    .tree-character {
+      position: absolute;
+      right: -90vw;
+      bottom: -20vh;
+      z-index: 30;
+      width: clamp(800px, 100vw, 1060px);
+      opacity: 0;
+      transform: translateX(28px) scale(0.96);
+      transition:
+        opacity 0.9s ease,
+        transform 0.9s ease;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .tree-character.is-visible {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+
+    .thought-bubble {
+      position: absolute;
+      right: 8vw;
+      bottom: 48vh;
+      z-index: 35;
+      width: clamp(250px, 42vw, 520px);
+      min-height: clamp(150px, 24vw, 280px);
+      padding: clamp(22px, 4vw, 40px);
+      border: clamp(6px, 1vw, 10px) solid #050505;
+      border-radius: 46% 54% 48% 52% / 52% 44% 56% 48%;
+      background: #fff;
+      opacity: 0;
+      transform: translateY(18px) scale(0.78) rotate(-2deg);
+      transition:
+        opacity 0.55s ease,
+        transform 0.7s cubic-bezier(0.2, 1.35, 0.4, 1);
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.18));
+    }
+
+    .thought-bubble.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotate(0deg);
+      animation: thoughtFloat 3.2s ease-in-out infinite 0.8s;
+    }
+
+    .thought-bubble::before,
+    .thought-bubble::after {
+      content: "";
+      position: absolute;
+      border: clamp(5px, 0.8vw, 8px) solid #050505;
+      border-radius: 50%;
+      background: #fff;
+      z-index: 1;
+    }
+
+    .thought-bubble::before {
+      width: clamp(34px, 6vw, 66px);
+      height: clamp(34px, 6vw, 66px);
+      right: 23%;
+      bottom: clamp(-60px, -7vw, -38px);
+    }
+
+    .thought-bubble::after {
+      width: clamp(18px, 3.5vw, 36px);
+      height: clamp(18px, 3.5vw, 36px);
+      right: 14%;
+      bottom: clamp(-104px, -11vw, -74px);
+    }
+
+    .bubble-lobe {
+      position: absolute;
+      border: clamp(6px, 1vw, 10px) solid #050505;
+      border-radius: 50%;
+      background: #fff;
+      z-index: -1;
+    }
+
+    .lobe-one {
+      width: 34%;
+      height: 48%;
+      left: -7%;
+      top: 18%;
+    }
+
+    .lobe-two {
+      width: 36%;
+      height: 55%;
+      left: 11%;
+      top: -18%;
+    }
+
+    .lobe-three {
+      width: 36%;
+      height: 54%;
+      right: 17%;
+      top: -19%;
+    }
+
+    .lobe-four {
+      width: 34%;
+      height: 48%;
+      right: -8%;
+      top: 18%;
+    }
+
+    .lobe-five {
+      width: 30%;
+      height: 44%;
+      right: 7%;
+      bottom: -14%;
+    }
+
+    .thought-bubble-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      min-height: clamp(105px, 16vw, 190px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111;
+      font-size: clamp(1rem, 2.8vw, 2rem);
+      line-height: 1.15;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    @keyframes thoughtFloat {
+      0%, 100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-5px) scale(1.015) rotate(0.4deg);
+      }
+    }
+
     @media (max-width: 700px) {
       .scene-two-bg {
         object-position: 42% center;
@@ -565,6 +705,13 @@
       .runner {
         width: clamp(180px, 78vw, 360px);
       }
+
+      .thought-bubble {
+        right: 4vw;
+        bottom: 50vh;
+        width: clamp(210px, 76vw, 360px);
+        min-height: 145px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -576,7 +723,8 @@
       .character.is-falling,
       .blackout,
       .blackout-message,
-      .runner {
+      .runner,
+      .thought-bubble {
         animation: none !important;
       }
     }
@@ -637,68 +785,6 @@
         filter: brightness(0.96);
       }
     }
-	
-	.tree-character {
-	  position: absolute;
-	  right: -90vw;
-	  bottom: -20vh;
-	  z-index: 30;
-	  width: clamp(800px, 100vw, 1060px);
-	  opacity: 0;
-	  transform: translateX(28px) scale(0.96);
-	  transition:
-		opacity 0.9s ease,
-		transform 0.9s ease;
-	  pointer-events: none;
-	  user-select: none;
-	  -webkit-user-drag: none;
-	}
-
-	.tree-character.is-visible {
-	  opacity: 1;
-	  transform: translateX(0) scale(1);
-	}
-
-	.idea-bulb {
-	  position: absolute;
-	  right: 10vw;
-	  bottom: 36vh;
-	  z-index: 19;
-	  width: clamp(100px, 15vw, 100px);
-	  opacity: 0;
-	  transform: translateY(10px) scale(0.4) rotate(-8deg);
-	  filter:
-	    drop-shadow(0 0 8px rgba(255, 240, 120, 0.75))
-	    drop-shadow(0 0 18px rgba(255, 210, 80, 0.45));
-	  transition:
-	    opacity 0.45s ease,
-	    transform 0.55s cubic-bezier(0.2, 1.4, 0.4, 1);
-	  pointer-events: none;
-	  user-select: none;
-	  -webkit-user-drag: none;
-	}
-	
-	.idea-bulb.is-visible {
-	  opacity: 1;
-	  transform: translateY(0) scale(1) rotate(0deg);
-	  animation: ideaPulse 1.15s ease-in-out infinite 0.5s;
-	}
-	
-	@keyframes ideaPulse {
-	  0%, 100% {
-	    filter:
-	      drop-shadow(0 0 8px rgba(255, 240, 120, 0.75))
-	      drop-shadow(0 0 18px rgba(255, 210, 80, 0.45));
-	    transform: translateY(0) scale(1);
-	  }
-	
-	  50% {
-	    filter:
-	      drop-shadow(0 0 13px rgba(255, 245, 150, 0.95))
-	      drop-shadow(0 0 28px rgba(255, 220, 95, 0.65));
-	    transform: translateY(-4px) scale(1.08);
-	  }
-	}
   </style>
 </head>
 
@@ -736,10 +822,20 @@
       <div id="runner" class="runner" aria-hidden="true">
         <div id="runnerSprite" class="runner-sprite"></div>
       </div>
-	  
-	  <img id="treeCharacter" class="tree-character" src="img/personaje-arbol.png" alt="">
-	  
-	  <img id="ideaBulb" class="idea-bulb" src="img/bombilla-idea.png" alt="">
+
+      <img id="treeCharacter" class="tree-character" src="img/personaje-arbol.png" alt="">
+
+      <div id="thoughtBubble" class="thought-bubble" aria-hidden="true">
+        <span class="bubble-lobe lobe-one"></span>
+        <span class="bubble-lobe lobe-two"></span>
+        <span class="bubble-lobe lobe-three"></span>
+        <span class="bubble-lobe lobe-four"></span>
+        <span class="bubble-lobe lobe-five"></span>
+
+        <div class="thought-bubble-inner">
+          Aquí irá la mini historia
+        </div>
+      </div>
 
       <img class="scene-two-tree-front" src="img/escena2-arbol-frente.png" alt="">
     </section>
@@ -751,12 +847,13 @@
     const RUNNER_FRAME_COUNT = 49;
     const RUNNER_COLUMNS = 7;
     const RUNNER_FRAME_DURATION = 60;
-	const treeCharacter = document.getElementById("treeCharacter");
-	const ideaBulb = document.getElementById("ideaBulb");
 
-	let runnerLaps = 0;
-	let treeCharacterShown = false;
-	let ideaBulbShown = false;
+    const treeCharacter = document.getElementById("treeCharacter");
+    const thoughtBubble = document.getElementById("thoughtBubble");
+
+    let runnerLaps = 0;
+    let treeCharacterShown = false;
+    let thoughtBubbleShown = false;
 
     const characterStates = [
       "img/personaje-normal.png",
@@ -772,8 +869,7 @@
       "img/escena2-fondo.png",
       "img/escena2-arbol-frente.png",
       "img/ciudad-delantera.png",
-	  "img/personaje-arbol.png",
-	  "img/bombilla-idea.png"
+      "img/personaje-arbol.png"
     ];
 
     const balloons = [
@@ -1022,30 +1118,30 @@
     }
 
     runner.addEventListener("animationend", (event) => {
-	  if (event.animationName !== "runLeftToRight" && event.animationName !== "runRightToLeft") {
-		return;
-	  }
+      if (event.animationName !== "runLeftToRight" && event.animationName !== "runRightToLeft") {
+        return;
+      }
 
-	  runnerLaps++;
+      runnerLaps++;
 
-	  if (runnerLaps >= 2 && !treeCharacterShown) {
-		treeCharacterShown = true;
-		treeCharacter.classList.add("is-visible");
-	  }
+      if (runnerLaps >= 2 && !treeCharacterShown) {
+        treeCharacterShown = true;
+        treeCharacter.classList.add("is-visible");
+      }
 
-	  if (runnerLaps >= 4 && !ideaBulbShown) {
-	    ideaBulbShown = true;
-	    ideaBulb.classList.add("is-visible");
-	  }
+      if (runnerLaps >= 4 && !thoughtBubbleShown) {
+        thoughtBubbleShown = true;
+        thoughtBubble.classList.add("is-visible");
+      }
 
-	  if (event.animationName === "runLeftToRight") {
-		startRunnerRoute("far");
-	  }
+      if (event.animationName === "runLeftToRight") {
+        startRunnerRoute("far");
+      }
 
-	  if (event.animationName === "runRightToLeft") {
-		startRunnerRoute("near");
-	  }
-	});
+      if (event.animationName === "runRightToLeft") {
+        startRunnerRoute("near");
+      }
+    });
 
     function startBlackout() {
       if (blackoutStarted) return;
