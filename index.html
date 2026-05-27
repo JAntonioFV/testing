@@ -715,27 +715,6 @@
       animation: coupleScene 8s ease-in-out infinite;
     }
 
-    .thought-bubble.is-visible .mini-runner {
-      animation: miniRunnerCross 8s ease-in-out infinite;
-    }
-
-    .thought-bubble.is-visible .runner-arm-one,
-    .thought-bubble.is-visible .runner-leg-two {
-      animation: limbSwingA 0.36s ease-in-out infinite alternate;
-      transform-origin: 214px 82px;
-    }
-
-    .thought-bubble.is-visible .runner-arm-two,
-    .thought-bubble.is-visible .runner-leg-one {
-      animation: limbSwingB 0.36s ease-in-out infinite alternate;
-      transform-origin: 214px 82px;
-    }
-
-    .thought-bubble.is-visible .watch-heart {
-      animation: watchHeartPop 8s ease-in-out infinite;
-      transform-origin: 132px 52px;
-    }
-
     .thought-bubble.is-visible .stick-boy {
       animation: boyApproach 8s ease-in-out infinite;
     }
@@ -747,23 +726,6 @@
     .thought-bubble.is-visible .kiss-heart {
       animation: kissHeartPop 8s ease-in-out infinite;
       transform-origin: 160px 48px;
-    }
-
-    @keyframes watchScene {
-      0%, 8% {
-        opacity: 0;
-        transform: translateY(4px) scale(0.96);
-      }
-
-      12%, 43% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-
-      50%, 100% {
-        opacity: 0;
-        transform: translateY(-4px) scale(0.98);
-      }
     }
 
     @keyframes coupleScene {
@@ -780,49 +742,6 @@
       100% {
         opacity: 0;
         transform: translateY(-4px) scale(0.98);
-      }
-    }
-
-    @keyframes miniRunnerCross {
-      0%, 10% {
-        transform: translateX(76px);
-        opacity: 0;
-      }
-
-      18%, 38% {
-        opacity: 1;
-      }
-
-      45%, 100% {
-        transform: translateX(-96px);
-        opacity: 0;
-      }
-    }
-
-    @keyframes limbSwingA {
-      from { transform: rotate(-10deg); }
-      to { transform: rotate(12deg); }
-    }
-
-    @keyframes limbSwingB {
-      from { transform: rotate(12deg); }
-      to { transform: rotate(-10deg); }
-    }
-
-    @keyframes watchHeartPop {
-      0%, 23% {
-        opacity: 0;
-        transform: scale(0.5) translateY(6px);
-      }
-
-      30%, 43% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-
-      50%, 100% {
-        opacity: 0;
-        transform: scale(0.75) translateY(-4px);
       }
     }
 
@@ -1406,7 +1325,7 @@
         treeCharacter.classList.add("is-visible");
       }
 
-      if (runnerLaps >= 3 && !thoughtBubbleShown) {
+      if (runnerLaps >= 2 && !thoughtBubbleShown) {
         thoughtBubbleShown = true;
         thoughtBubble.classList.add("is-visible");
       }
