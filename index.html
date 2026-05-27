@@ -651,6 +651,222 @@
       transform: rotate(9deg);
     }
 
+    .thought-story {
+      position: absolute;
+      left: 16%;
+      top: 22%;
+      z-index: 3;
+      width: 68%;
+      height: 54%;
+      opacity: 0;
+      transform: scale(0.96);
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
+    }
+
+    .thought-bubble.is-visible .thought-story {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .stick-story {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .stick-story line,
+    .stick-story path,
+    .stick-story circle {
+      fill: none;
+      stroke: #111;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .story-ground line {
+      stroke-width: 3.2;
+      opacity: 0.45;
+    }
+
+    .story-scene {
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .mom-hair,
+    .runner-hair,
+    .girl-hair,
+    .boy-hair {
+      stroke-width: 4;
+    }
+
+    .kiss-heart,
+    .watch-heart {
+      fill: #ff5c8a;
+      stroke: #111;
+      stroke-width: 4;
+    }
+
+    .thought-bubble.is-visible .story-scene-watch {
+      animation: watchScene 8s ease-in-out infinite;
+    }
+
+    .thought-bubble.is-visible .story-scene-couple {
+      animation: coupleScene 8s ease-in-out infinite;
+    }
+
+    .thought-bubble.is-visible .mini-runner {
+      animation: miniRunnerCross 8s ease-in-out infinite;
+    }
+
+    .thought-bubble.is-visible .runner-arm-one,
+    .thought-bubble.is-visible .runner-leg-two {
+      animation: limbSwingA 0.36s ease-in-out infinite alternate;
+      transform-origin: 214px 82px;
+    }
+
+    .thought-bubble.is-visible .runner-arm-two,
+    .thought-bubble.is-visible .runner-leg-one {
+      animation: limbSwingB 0.36s ease-in-out infinite alternate;
+      transform-origin: 214px 82px;
+    }
+
+    .thought-bubble.is-visible .watch-heart {
+      animation: watchHeartPop 8s ease-in-out infinite;
+      transform-origin: 132px 52px;
+    }
+
+    .thought-bubble.is-visible .stick-boy {
+      animation: boyApproach 8s ease-in-out infinite;
+    }
+
+    .thought-bubble.is-visible .stick-girl {
+      animation: girlApproach 8s ease-in-out infinite;
+    }
+
+    .thought-bubble.is-visible .kiss-heart {
+      animation: kissHeartPop 8s ease-in-out infinite;
+      transform-origin: 160px 48px;
+    }
+
+    @keyframes watchScene {
+      0%, 8% {
+        opacity: 0;
+        transform: translateY(4px) scale(0.96);
+      }
+
+      12%, 43% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      50%, 100% {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.98);
+      }
+    }
+
+    @keyframes coupleScene {
+      0%, 48% {
+        opacity: 0;
+        transform: translateY(5px) scale(0.96);
+      }
+
+      55%, 92% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.98);
+      }
+    }
+
+    @keyframes miniRunnerCross {
+      0%, 10% {
+        transform: translateX(76px);
+        opacity: 0;
+      }
+
+      18%, 38% {
+        opacity: 1;
+      }
+
+      45%, 100% {
+        transform: translateX(-96px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes limbSwingA {
+      from { transform: rotate(-10deg); }
+      to { transform: rotate(12deg); }
+    }
+
+    @keyframes limbSwingB {
+      from { transform: rotate(12deg); }
+      to { transform: rotate(-10deg); }
+    }
+
+    @keyframes watchHeartPop {
+      0%, 23% {
+        opacity: 0;
+        transform: scale(0.5) translateY(6px);
+      }
+
+      30%, 43% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+
+      50%, 100% {
+        opacity: 0;
+        transform: scale(0.75) translateY(-4px);
+      }
+    }
+
+    @keyframes boyApproach {
+      0%, 52% {
+        transform: translateX(-34px);
+      }
+
+      70%, 100% {
+        transform: translateX(14px);
+      }
+    }
+
+    @keyframes girlApproach {
+      0%, 52% {
+        transform: translateX(34px);
+      }
+
+      70%, 100% {
+        transform: translateX(-14px);
+      }
+    }
+
+    @keyframes kissHeartPop {
+      0%, 65% {
+        opacity: 0;
+        transform: scale(0.45) translateY(8px);
+      }
+
+      74%, 92% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0.75) translateY(-5px);
+      }
+    }
+
     @keyframes thoughtFloat {
       0%, 100% {
         transform: translate(-50%, 0) scale(1);
@@ -699,6 +915,13 @@
         right: 8.3%;
         bottom: -14%;
       }
+
+      .thought-story {
+        left: 15%;
+        top: 22%;
+        width: 70%;
+        height: 55%;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -711,7 +934,17 @@
       .blackout,
       .blackout-message,
       .runner,
-      .thought-bubble {
+      .thought-bubble,
+      .story-scene,
+      .mini-runner,
+      .runner-arm-one,
+      .runner-arm-two,
+      .runner-leg-one,
+      .runner-leg-two,
+      .watch-heart,
+      .stick-boy,
+      .stick-girl,
+      .kiss-heart {
         animation: none !important;
       }
     }
@@ -769,7 +1002,6 @@
 
       58% {
         transform: scale(0.96);
-        filter: brightness(0.96);
       }
     }
   </style>
@@ -847,6 +1079,69 @@
                C148 229 130 225 113 223"
           />
         </svg>
+
+        <div class="thought-story">
+          <svg class="stick-story" viewBox="0 0 320 170" aria-hidden="true">
+            <g class="story-scene story-scene-watch">
+              <g class="story-ground">
+                <line x1="30" y1="136" x2="290" y2="136"></line>
+                <line x1="48" y1="150" x2="95" y2="150"></line>
+                <line x1="126" y1="150" x2="174" y2="150"></line>
+                <line x1="206" y1="150" x2="254" y2="150"></line>
+              </g>
+
+              <g class="stick-mom">
+                <circle cx="73" cy="63" r="12"></circle>
+                <path d="M73 75 L73 109"></path>
+                <path d="M73 84 L53 96"></path>
+                <path d="M73 84 L94 95"></path>
+                <path d="M73 109 L58 131"></path>
+                <path d="M73 109 L91 131"></path>
+                <path class="mom-hair" d="M62 59 C66 43 83 43 88 56"></path>
+              </g>
+
+              <g class="mini-runner">
+                <circle cx="218" cy="58" r="11"></circle>
+                <path d="M218 69 L211 101"></path>
+                <path class="runner-arm-one" d="M214 78 L194 91"></path>
+                <path class="runner-arm-two" d="M214 79 L236 88"></path>
+                <path class="runner-leg-one" d="M211 101 L190 126"></path>
+                <path class="runner-leg-two" d="M211 101 L237 122"></path>
+                <path class="runner-hair" d="M208 55 C213 42 229 45 231 59"></path>
+              </g>
+
+              <path class="watch-heart" d="M116 48 C116 40 126 37 131 44 C136 37 146 40 146 48 C146 59 131 67 131 67 C131 67 116 59 116 48 Z"></path>
+            </g>
+
+            <g class="story-scene story-scene-couple">
+              <g class="story-ground">
+                <line x1="42" y1="137" x2="278" y2="137"></line>
+              </g>
+
+              <g class="stick-boy">
+                <circle cx="114" cy="61" r="12"></circle>
+                <path d="M114 73 L114 108"></path>
+                <path d="M114 84 L96 97"></path>
+                <path d="M114 84 L131 96"></path>
+                <path d="M114 108 L99 130"></path>
+                <path d="M114 108 L130 130"></path>
+                <path class="boy-hair" d="M105 55 C111 46 123 47 128 57"></path>
+              </g>
+
+              <g class="stick-girl">
+                <circle cx="206" cy="61" r="12"></circle>
+                <path d="M206 73 L206 108"></path>
+                <path d="M206 84 L189 96"></path>
+                <path d="M206 84 L224 96"></path>
+                <path d="M206 108 L190 130"></path>
+                <path d="M206 108 L222 130"></path>
+                <path class="girl-hair" d="M195 58 C198 42 217 42 222 58 C218 68 200 69 195 58"></path>
+              </g>
+
+              <path class="kiss-heart" d="M145 45 C145 36 156 33 161 41 C166 33 177 36 177 45 C177 58 161 67 161 67 C161 67 145 58 145 45 Z"></path>
+            </g>
+          </svg>
+        </div>
 
         <span class="thought-puff thought-puff-one"></span>
         <span class="thought-puff thought-puff-two"></span>
