@@ -711,10 +711,6 @@
       stroke-width: 4;
     }
 
-    .thought-bubble.is-visible .story-scene-watch {
-      animation: watchScene 8s ease-in-out infinite;
-    }
-
     .thought-bubble.is-visible .story-scene-couple {
       animation: coupleScene 8s ease-in-out infinite;
     }
@@ -1405,12 +1401,12 @@
 
       runnerLaps++;
 
-      if (runnerLaps >= 2 && !treeCharacterShown) {
+      if (runnerLaps >= 1 && !treeCharacterShown) {
         treeCharacterShown = true;
         treeCharacter.classList.add("is-visible");
       }
 
-      if (runnerLaps >= 4 && !thoughtBubbleShown) {
+      if (runnerLaps >= 3 && !thoughtBubbleShown) {
         thoughtBubbleShown = true;
         thoughtBubble.classList.add("is-visible");
       }
