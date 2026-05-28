@@ -387,6 +387,7 @@
 
     .blackout.is-active {
       animation: fadeToBlack 1.8s ease-in-out forwards;
+      pointer-events: auto;
     }
 
     .blackout.is-leaving {
@@ -455,6 +456,22 @@
     }
 
     .scene-two.is-active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .scene-three {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      background: #000;
+      transition: opacity 1.3s ease-in-out;
+      overflow: hidden;
+    }
+
+    .scene-three.is-active {
       opacity: 1;
       pointer-events: auto;
     }
@@ -736,24 +753,7 @@
       stroke-linejoin: round;
     }
 
-    .center-guide-circle {
-      fill: none !important;
-      stroke: rgba(17, 17, 17, 0.08) !important;
-      stroke-width: 1.5 !important;
-      stroke-dasharray: 4, 4 !important;
-    }
 
-    .center-guide-line {
-      fill: none !important;
-      stroke: rgba(17, 17, 17, 0.06) !important;
-      stroke-width: 1.5 !important;
-      stroke-dasharray: 6, 6 !important;
-    }
-
-    .center-guide-dot {
-      fill: rgba(17, 17, 17, 0.15) !important;
-      stroke: none !important;
-    }
 
     .thought-bubble.is-visible .label-juan {
       animation: labelPop 6s ease-in-out infinite;
@@ -922,6 +922,94 @@
       }
     }
 
+    /* Redefine is-visible to make thought bubble interactive and glowing on hover */
+    .thought-bubble.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+      animation: thoughtFloat 3.2s ease-in-out infinite 0.8s;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      transition: opacity 0.55s ease, transform 0.72s cubic-bezier(0.2, 1.35, 0.4, 1), filter 0.3s ease;
+    }
+
+    .thought-bubble.is-visible:hover {
+      filter: drop-shadow(0 8px 20px rgba(255, 79, 139, 0.38));
+      transform: translate(-50%, -4px) scale(1.03);
+    }
+
+    .thought-bubble.is-popped {
+      animation: cloudPuncture 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+      pointer-events: none !important;
+    }
+
+    @keyframes cloudPuncture {
+      0% {
+        transform: translate(-50%, 0) scale(1);
+        opacity: 1;
+      }
+      15% {
+        transform: translate(-50%, -12px) scale(1.15, 0.85);
+        filter: brightness(1.2);
+      }
+      40% {
+        transform: translate(-50%, 25px) scale(0.55, 0.25);
+        opacity: 0.8;
+      }
+      70% {
+        transform: translate(-50%, 45px) scale(0.15, 0.05);
+        opacity: 0.35;
+        filter: blur(2px);
+      }
+      100% {
+        transform: translate(-50%, 55px) scale(0);
+        opacity: 0;
+        filter: blur(5px);
+      }
+    }
+
+    /* Heart & Star particles floating animation */
+    .heart-particle {
+      position: fixed;
+      font-size: clamp(18px, 4vw, 24px);
+      pointer-events: none;
+      z-index: 10000;
+      animation: particleFloatUp 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      user-select: none;
+    }
+
+    @keyframes particleFloatUp {
+      0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        transform: translate(-50%, -50%) scale(var(--scale-max)) rotate(var(--rot-start));
+        opacity: 0.95;
+      }
+      100% {
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.25) rotate(var(--rot-end));
+        opacity: 0;
+      }
+    }
+
+    .btn-reset {
+      background: linear-gradient(135deg, #ff4f8b 0%, #ff758f 100%);
+      color: white;
+      border: none;
+      padding: 11px 28px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 79, 139, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .btn-reset:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 79, 139, 0.55);
+    }
+
     @media (max-width: 700px) {
       .scene-two-bg {
         object-position: 42% center;
@@ -972,7 +1060,10 @@
       .blackout,
       .blackout-message,
       .runner,
-      .thought-bubble {
+      .thought-bubble,
+      .star-back,
+      .star-halo,
+      .shooting-star {
         animation: none !important;
       }
     }
@@ -1074,38 +1165,33 @@
 
       <div id="thoughtBubble" class="thought-bubble" aria-hidden="true">
         <svg class="thought-cloud-svg" viewBox="0 0 520 330" aria-hidden="true">
-          <!-- Background Center Alignment Guides (faint and technical-styled) -->
-          <g class="cloud-center-guides">
-            <line x1="80" y1="165" x2="440" y2="165" class="center-guide-line" />
-            <line x1="260" y1="50" x2="260" y2="280" class="center-guide-line" />
-            <circle cx="260" cy="165" r="45" class="center-guide-circle" />
-            <circle cx="260" cy="165" r="95" class="center-guide-circle" />
-            <circle cx="260" cy="165" r="4" class="center-guide-dot" />
-          </g>
-
           <path
             class="thought-cloud-fill"
-            d="M 260 50
-               C 310 45, 345 70, 360 100
-               C 400 95, 450 125, 450 170
-               C 450 215, 395 235, 360 230
-               C 345 265, 305 280, 260 280
-               C 215 280, 175 265, 160 230
-               C 125 235, 70 215, 70 170
-               C 70 125, 120 95, 160 100
-               C 175 70, 210 45, 260 50 Z"
+            d="M 260 62
+               C 290 54, 325 58, 350 82
+               C 380 75, 420 92, 435 125
+               C 450 155, 455 185, 435 215
+               C 415 245, 380 255, 350 252
+               C 325 272, 290 274, 260 268
+               C 230 274, 195 272, 170 252
+               C 140 255, 105 245, 85 215
+               C 65 185, 70 155, 85 125
+               C 100 92, 140 75, 170 82
+               C 195 58, 230 54, 260 62 Z"
           />
           <path
             class="thought-cloud-line"
-            d="M 260 50
-               C 310 45, 345 70, 360 100
-               C 400 95, 450 125, 450 170
-               C 450 215, 395 235, 360 230
-               C 345 265, 305 280, 260 280
-               C 215 280, 175 265, 160 230
-               C 125 235, 70 215, 70 170
-               C 70 125, 120 95, 160 100
-               C 175 70, 210 45, 260 50 Z"
+            d="M 260 62
+               C 290 54, 325 58, 350 82
+               C 380 75, 420 92, 435 125
+               C 450 155, 455 185, 435 215
+               C 415 245, 380 255, 350 252
+               C 325 272, 290 274, 260 268
+               C 230 274, 195 272, 170 252
+               C 140 255, 105 245, 85 215
+               C 65 185, 70 155, 85 125
+               C 100 92, 140 75, 170 82
+               C 195 58, 230 54, 260 62 Z"
           />
         </svg>
 
@@ -1180,6 +1266,10 @@
       </div>
 
       <img class="scene-two-tree-front" src="img/escena2-arbol-frente.png" alt="">
+    </section>
+
+    <!-- Escena Tres: Fondo Negro Preparatorio -->
+    <section id="sceneThree" class="scene-three" aria-hidden="true">
     </section>
   </main>
 
@@ -1474,6 +1564,7 @@
       if (runnerLaps >= 2 && !thoughtBubbleShown) {
         thoughtBubbleShown = true;
         thoughtBubble.classList.add("is-visible");
+        setupThoughtBubbleInteraction();
       }
 
       if (event.animationName === "runLeftToRight") {
@@ -1484,6 +1575,164 @@
         startRunnerRoute("near");
       }
     });
+
+    // Configura la interacción táctil y clic sobre la nube de pensamientos en Escena Dos
+    function setupThoughtBubbleInteraction() {
+      thoughtBubble.onclick = null;
+      thoughtBubble.onclick = (e) => {
+        // Bloquear múltiples clics
+        thoughtBubble.onclick = null;
+
+        // Añadir clase de animación de pincharse (punzadura de la nube)
+        thoughtBubble.classList.add("is-popped");
+
+        // Iniciar el blackout con la frase romántica final, imitando el tiempo de transición del primero y dejando en negro
+        window.setTimeout(() => {
+          const messageEl = blackout.querySelector(".blackout-message");
+          messageEl.textContent = "Ella te eligió a ti, me tocaba a mi hacerlo...";
+          blackout.style.background = "#000"; // Blackout puro en negro
+          blackout.classList.add("is-active");
+
+          window.setTimeout(() => {
+            // Detener el runner y ocultar Escena Dos (limpiar la escena y preparar la siguiente/dejar en negro)
+            if (runnerFrameTimer) {
+              window.clearInterval(runnerFrameTimer);
+              runnerFrameTimer = null;
+            }
+            sceneTwo.classList.remove("is-active");
+            sceneTwo.setAttribute("aria-hidden", "true");
+
+            // Mostrar y preparar Escena Tres
+            const sceneThree = document.getElementById("sceneThree");
+            if (sceneThree) {
+              sceneThree.classList.add("is-active");
+              sceneThree.setAttribute("aria-hidden", "false");
+            }
+
+            // Iniciar la transición de salida del blackout
+            window.setTimeout(() => {
+              blackout.classList.remove("is-active");
+              blackout.classList.add("is-leaving");
+
+              window.setTimeout(() => {
+                blackout.classList.remove("is-leaving");
+              }, 1800);
+            }, 300); // 300ms delay coincidiendo con el primer blackout
+
+          }, 3000); // El blackout permanece 3s como el primero
+        }, 600); // Permitir que la animación de "pincharse" se aprecie antes del blackout
+      };
+    }
+
+    // Genera partículas en cascada de corazones de colores flotantes
+    function createHeartBurst(e) {
+      const rect = thoughtBubble.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 3.2;
+
+      for (let i = 0; i < 22; i++) {
+        const particle = document.createElement("div");
+        particle.className = "heart-particle";
+        particle.style.left = `${cx}px`;
+        particle.style.top = `${cy}px`;
+        
+        const angle = randomBetween(0, Math.PI * 2);
+        const dist = randomBetween(45, 175);
+        const tx = Math.cos(angle) * dist;
+        const ty = Math.sin(angle) * dist - 70; // Deriva hacia arriba de forma natural
+        
+        const rotStart = randomBetween(-25, 25);
+        const rotEnd = randomBetween(-180, 180);
+        const scaleMax = randomBetween(0.75, 1.35);
+
+        particle.style.setProperty("--tx", `${tx}px`);
+        particle.style.setProperty("--ty", `${ty}px`);
+        particle.style.setProperty("--rot-start", `${rotStart}deg`);
+        particle.style.setProperty("--rot-end", `${rotEnd}deg`);
+        particle.style.setProperty("--scale-max", scaleMax);
+
+        // Paleta pastel y cálida para los corazones
+        const colors = ["#ff4f8b", "#ff758f", "#ff8fa3", "#ffa6c9", "#fbcfdf", "#ffebd9"];
+        particle.innerHTML = "❤";
+        particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        document.body.appendChild(particle);
+        particle.addEventListener("animationend", () => particle.remove(), { once: true });
+      }
+    }
+
+    // Reinicia la experiencia para volver al dulce inicio
+    function resetExperience() {
+      // Ocultar botón de reinicio antes del fundido
+      const resetBtn = document.getElementById("blackoutResetBtn");
+      if (resetBtn) {
+        resetBtn.style.opacity = "0";
+        resetBtn.style.pointerEvents = "none";
+      }
+
+      const messageEl = blackout.querySelector(".blackout-message");
+      messageEl.textContent = "Regresando al dulce inicio...";
+      blackout.classList.add("is-active");
+
+      window.setTimeout(() => {
+        // Reajustar todas las variables clave del runner de Escena Dos
+        runnerLaps = 0;
+        treeCharacterShown = false;
+        thoughtBubbleShown = false;
+        treeCharacter.classList.remove("is-visible");
+        thoughtBubble.classList.remove("is-visible");
+        thoughtBubble.classList.remove("is-popped");
+        thoughtBubble.onclick = null;
+        stringKnot.classList.remove("is-hidden");
+        blackoutStarted = false;
+
+        // Limpiar Escena Tres
+        const sceneThree = document.getElementById("sceneThree");
+        if (sceneThree) {
+          sceneThree.classList.remove("is-active");
+          sceneThree.setAttribute("aria-hidden", "true");
+        }
+
+        if (runnerFrameTimer) {
+          window.clearInterval(runnerFrameTimer);
+          runnerFrameTimer = null;
+        }
+
+        // Reajustar globos táctiles de la Escena Uno
+        document.querySelectorAll(".balloon-input").forEach((input) => {
+          input.checked = false;
+        });
+        document.querySelectorAll(".balloon").forEach((b) => {
+          b.classList.remove("is-popped");
+        });
+        document.querySelectorAll(".strings-svg line").forEach((l) => {
+          l.classList.remove("is-hidden");
+        });
+
+        bobbingContainer.style.animation = "";
+        setCharacterMood(0);
+
+        // Regresar la lona del cielo general a escena uno
+        skyCanvas.classList.remove("is-next-scene");
+
+        // Volver a disparar el renderizado básico
+        startClouds();
+        startBalloons();
+        startSceneOne();
+
+        window.setTimeout(() => {
+          // Restaurar frase del primer blackout
+          messageEl.textContent = "Y entonces empezó nuestra historia...";
+          
+          blackout.classList.remove("is-active");
+          blackout.classList.add("is-leaving");
+
+          window.setTimeout(() => {
+            blackout.classList.remove("is-leaving");
+          }, 1800);
+        }, 800);
+      }, 2000);
+    }
 
     function startBlackout() {
       if (blackoutStarted) return;
