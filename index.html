@@ -654,7 +654,7 @@
     .thought-story {
       position: absolute;
       left: 16%;
-      top: 22%;
+      top: 23%;
       z-index: 3;
       width: 68%;
       height: 54%;
@@ -686,99 +686,229 @@
       stroke-linejoin: round;
     }
 
-    .story-ground line {
-      stroke-width: 3.2;
-      opacity: 0.45;
-    }
-
     .story-scene {
-      opacity: 0;
+      opacity: 1;
       transform-box: fill-box;
       transform-origin: center;
     }
 
-    .mom-hair,
-    .runner-hair,
-    .girl-hair,
-    .boy-hair {
+    .boy-hair,
+    .girl-hair {
       stroke-width: 4;
     }
 
-    .kiss-heart,
-    .watch-heart {
-      fill: #ff5c8a;
+    .kiss-heart {
+      fill: #ff2a2a !important;
       stroke: #111;
       stroke-width: 4;
     }
 
-    .thought-bubble.is-visible .story-scene-couple {
-      animation: coupleScene 8s ease-in-out infinite;
+    .stick-dress,
+    .stick-shorts,
+    .stick-bow {
+      fill: #fff !important;
     }
 
-    .thought-bubble.is-visible .stick-boy {
-      animation: boyApproach 8s ease-in-out infinite;
+    .stick-eye {
+      fill: #111 !important;
+      stroke: none !important;
     }
 
-    .thought-bubble.is-visible .stick-girl {
-      animation: girlApproach 8s ease-in-out infinite;
+    .stick-smile {
+      stroke-width: 2.5 !important;
+      fill: none !important;
     }
 
-    .thought-bubble.is-visible .kiss-heart {
-      animation: kissHeartPop 8s ease-in-out infinite;
-      transform-origin: 160px 48px;
+    .label-text {
+      font-family: "FuenteRomantica", "Comic Sans MS", cursive, sans-serif;
+      font-size: 19px;
+      font-weight: bold;
+      fill: #111 !important;
+      stroke: none !important;
+      text-anchor: middle;
     }
 
-    @keyframes coupleScene {
-      0%, 48% {
+    .label-arrow {
+      fill: none !important;
+      stroke: #111 !important;
+      stroke-width: 3.5 !important;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .center-guide-circle {
+      fill: none !important;
+      stroke: rgba(17, 17, 17, 0.08) !important;
+      stroke-width: 1.5 !important;
+      stroke-dasharray: 4, 4 !important;
+    }
+
+    .center-guide-line {
+      fill: none !important;
+      stroke: rgba(17, 17, 17, 0.06) !important;
+      stroke-width: 1.5 !important;
+      stroke-dasharray: 6, 6 !important;
+    }
+
+    .center-guide-dot {
+      fill: rgba(17, 17, 17, 0.15) !important;
+      stroke: none !important;
+    }
+
+    .thought-bubble.is-visible .label-juan {
+      animation: labelPop 6s ease-in-out infinite;
+      transform-origin: 75px 125px;
+    }
+
+    .thought-bubble.is-visible .label-fer {
+      animation: labelPop 6s ease-in-out infinite;
+      transform-origin: 245px 125px;
+    }
+
+    @keyframes labelPop {
+      0%, 30% {
         opacity: 0;
-        transform: translateY(5px) scale(0.96);
+        transform: scale(0);
       }
 
-      55%, 92% {
+      38% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: scale(1.1);
+      }
+
+      43%, 62% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      70% {
+        opacity: 0;
+        transform: scale(0);
       }
 
       100% {
         opacity: 0;
-        transform: translateY(-4px) scale(0.98);
+        transform: scale(0);
       }
     }
 
+    .thought-bubble.is-visible .stick-boy {
+      animation: boyApproach 6s ease-in-out infinite;
+    }
+
+    .thought-bubble.is-visible .stick-girl {
+      animation: girlApproach 6s ease-in-out infinite;
+    }
+
+    .thought-bubble.is-visible .heart-1 {
+      animation: heartPop1 6s ease-in-out infinite;
+      transform-origin: 167px 50px;
+    }
+
+    .thought-bubble.is-visible .heart-2 {
+      animation: heartPop2 6s ease-in-out infinite;
+      transform-origin: 167px 50px;
+    }
+
+    .thought-bubble.is-visible .heart-3 {
+      animation: heartPop3 6s ease-in-out infinite;
+      transform-origin: 167px 50px;
+    }
+
     @keyframes boyApproach {
-      0%, 52% {
+      0% {
         transform: translateX(-34px);
       }
 
-      70%, 100% {
+      30%, 70% {
         transform: translateX(14px);
+      }
+
+      100% {
+        transform: translateX(-34px);
       }
     }
 
     @keyframes girlApproach {
-      0%, 52% {
+      0% {
         transform: translateX(34px);
       }
 
-      70%, 100% {
+      30%, 70% {
         transform: translateX(-14px);
-      }
-    }
-
-    @keyframes kissHeartPop {
-      0%, 65% {
-        opacity: 0;
-        transform: scale(0.45) translateY(8px);
-      }
-
-      74%, 92% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
       }
 
       100% {
+        transform: translateX(34px);
+      }
+    }
+
+    @keyframes heartPop1 {
+      0%, 30% {
         opacity: 0;
-        transform: scale(0.75) translateY(-5px);
+        transform: scale(0) translate(0, 0) rotate(0deg);
+      }
+      38% {
+        opacity: 1;
+        transform: scale(0.65) translate(-14px, -18px) rotate(-15deg);
+      }
+      55% {
+        opacity: 0.9;
+        transform: scale(0.6) translate(-24px, -36px) rotate(-22deg);
+      }
+      65% {
+        opacity: 0;
+        transform: scale(0.2) translate(-32px, -52px) rotate(-30deg);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0) translate(0, 0) rotate(0deg);
+      }
+    }
+
+    @keyframes heartPop2 {
+      0%, 33% {
+        opacity: 0;
+        transform: scale(0) translate(0, 0) rotate(0deg);
+      }
+      41% {
+        opacity: 1;
+        transform: scale(0.95) translate(4px, -22px) rotate(5deg);
+      }
+      58% {
+        opacity: 1;
+        transform: scale(0.85) translate(8px, -48px) rotate(12deg);
+      }
+      67% {
+        opacity: 0;
+        transform: scale(0.3) translate(12px, -68px) rotate(18deg);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0) translate(0, 0) rotate(0deg);
+      }
+    }
+
+    @keyframes heartPop3 {
+      0%, 36% {
+        opacity: 0;
+        transform: scale(0) translate(0, 0) rotate(0deg);
+      }
+      44% {
+        opacity: 1;
+        transform: scale(0.55) translate(16px, -12px) rotate(20deg);
+      }
+      59% {
+        opacity: 0.9;
+        transform: scale(0.5) translate(28px, -28px) rotate(32deg);
+      }
+      68% {
+        opacity: 0;
+        transform: scale(0.15) translate(36px, -42px) rotate(40deg);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0) translate(0, 0) rotate(0deg);
       }
     }
 
@@ -830,13 +960,6 @@
         right: 8.3%;
         bottom: -14%;
       }
-
-      .thought-story {
-        left: 15%;
-        top: 22%;
-        width: 70%;
-        height: 55%;
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -849,17 +972,7 @@
       .blackout,
       .blackout-message,
       .runner,
-      .thought-bubble,
-      .story-scene,
-      .mini-runner,
-      .runner-arm-one,
-      .runner-arm-two,
-      .runner-leg-one,
-      .runner-leg-two,
-      .watch-heart,
-      .stick-boy,
-      .stick-girl,
-      .kiss-heart {
+      .thought-bubble {
         animation: none !important;
       }
     }
@@ -961,69 +1074,102 @@
 
       <div id="thoughtBubble" class="thought-bubble" aria-hidden="true">
         <svg class="thought-cloud-svg" viewBox="0 0 520 330" aria-hidden="true">
+          <!-- Background Center Alignment Guides (faint and technical-styled) -->
+          <g class="cloud-center-guides">
+            <line x1="80" y1="165" x2="440" y2="165" class="center-guide-line" />
+            <line x1="260" y1="50" x2="260" y2="280" class="center-guide-line" />
+            <circle cx="260" cy="165" r="45" class="center-guide-circle" />
+            <circle cx="260" cy="165" r="95" class="center-guide-circle" />
+            <circle cx="260" cy="165" r="4" class="center-guide-dot" />
+          </g>
+
           <path
             class="thought-cloud-fill"
-            d="M112 225
-               C66 224 36 194 42 155
-               C47 120 81 96 119 103
-               C126 67 162 46 197 55
-               C219 28 263 24 291 50
-               C318 33 358 42 378 72
-               C415 68 450 92 456 127
-               C489 136 503 176 481 205
-               C498 240 467 276 429 269
-               C407 299 362 294 345 264
-               C319 294 269 291 250 260
-               C219 289 168 275 163 236
-               C147 229 130 226 112 225 Z"
+            d="M 260 50
+               C 310 45, 345 70, 360 100
+               C 400 95, 450 125, 450 170
+               C 450 215, 395 235, 360 230
+               C 345 265, 305 280, 260 280
+               C 215 280, 175 265, 160 230
+               C 125 235, 70 215, 70 170
+               C 70 125, 120 95, 160 100
+               C 175 70, 210 45, 260 50 Z"
           />
           <path
             class="thought-cloud-line"
-            d="M113 223
-               C65 224 35 194 42 154
-               C49 114 85 94 119 103
-               C124 67 161 45 198 55
-               C220 28 265 24 292 51
-               C321 31 359 44 379 73
-               C416 68 452 93 456 129
-               C489 136 503 178 480 207
-               C497 239 466 276 429 268
-               C406 299 361 294 345 264
-               C318 294 269 291 250 260
-               C219 289 168 275 163 236
-               C148 229 130 225 113 223"
+            d="M 260 50
+               C 310 45, 345 70, 360 100
+               C 400 95, 450 125, 450 170
+               C 450 215, 395 235, 360 230
+               C 345 265, 305 280, 260 280
+               C 215 280, 175 265, 160 230
+               C 125 235, 70 215, 70 170
+               C 70 125, 120 95, 160 100
+               C 175 70, 210 45, 260 50 Z"
           />
         </svg>
 
         <div class="thought-story">
           <svg class="stick-story" viewBox="0 0 320 170" aria-hidden="true">
-
             <g class="story-scene story-scene-couple">
-              <g class="story-ground">
-                <line x1="42" y1="137" x2="278" y2="137"></line>
-              </g>
-
               <g class="stick-boy">
                 <circle cx="114" cy="61" r="12"></circle>
-                <path d="M114 73 L114 108"></path>
+                <!-- Eyes -->
+                <circle class="stick-eye" cx="110" cy="58" r="2"></circle>
+                <circle class="stick-eye" cx="118" cy="58" r="2"></circle>
+                <!-- Smile -->
+                <path class="stick-smile" d="M110 65 Q114 70 118 65"></path>
+                
+                <!-- Spine/Torso -->
+                <path d="M114 73 L114 96"></path>
+                <!-- Arms -->
                 <path d="M114 84 L96 97"></path>
                 <path d="M114 84 L131 96"></path>
-                <path d="M114 108 L99 130"></path>
-                <path d="M114 108 L130 130"></path>
+                <!-- Shorts -->
+                <path class="stick-shorts" d="M100 96 L128 96 L128 114 L119 114 L114 105 L109 114 L100 114 Z"></path>
+                <!-- Legs -->
+                <path d="M104 114 L100 132"></path>
+                <path d="M124 114 L128 132"></path>
+                <!-- Hair -->
                 <path class="boy-hair" d="M105 55 C111 46 123 47 128 57"></path>
               </g>
 
               <g class="stick-girl">
                 <circle cx="206" cy="61" r="12"></circle>
-                <path d="M206 73 L206 108"></path>
+                <!-- Eyes -->
+                <circle class="stick-eye" cx="202" cy="58" r="2"></circle>
+                <circle class="stick-eye" cx="210" cy="58" r="2"></circle>
+                <!-- Smile -->
+                <path class="stick-smile" d="M202 65 Q206 70 210 65"></path>
+                <!-- Bow on head -->
+                <path class="stick-bow" d="M197 47 L190 41 L193 51 Z M197 47 L204 41 L201 51 Z"></path>
+                <!-- Dress/Skirt -->
+                <path class="stick-dress" d="M206 73 L188 114 L224 114 Z"></path>
+                <!-- Arms -->
                 <path d="M206 84 L189 96"></path>
                 <path d="M206 84 L224 96"></path>
-                <path d="M206 108 L190 130"></path>
-                <path d="M206 108 L222 130"></path>
-                <path class="girl-hair" d="M195 58 C198 42 217 42 222 58 C218 68 200 69 195 58"></path>
+                <!-- Legs -->
+                <path d="M198 114 L194 132"></path>
+                <path d="M214 114 L218 132"></path>
               </g>
 
-              <path class="kiss-heart" d="M145 45 C145 36 156 33 161 41 C166 33 177 36 177 45 C177 58 161 67 161 67 C161 67 145 58 145 45 Z"></path>
+              <!-- Multiple kissing hearts that float sequentially with staggered keyframes -->
+              <path class="kiss-heart heart-1" d="M156 46 C156 39 164 37 167 42 C170 37 178 39 178 46 C178 55 167 61 167 61 C167 61 156 55 156 46 Z"></path>
+              <path class="kiss-heart heart-2" d="M154 44 C154 36 163 34 167 39 C171 34 180 36 180 44 C180 54 167 61 167 61 C167 61 154 54 154 44 Z"></path>
+              <path class="kiss-heart heart-3" d="M157 47 C157 41 164 39 167 43 C170 39 177 41 177 47 C177 55 167 61 167 61 C167 61 157 55 157 47 Z"></path>
+
+              <!-- Name labels with short, cute pointing arrows that appear during the kissing sequence -->
+              <g class="label-juan">
+                <text x="75" y="135" class="label-text">Juan</text>
+                <path class="label-arrow" d="M 75 120 Q 88 110 98 108"></path>
+                <path class="label-arrow" d="M 92 112 L 98 108 L 94 102"></path>
+              </g>
+
+              <g class="label-fer">
+                <text x="245" y="135" class="label-text">Fer</text>
+                <path class="label-arrow" d="M 245 120 Q 232 110 222 108"></path>
+                <path class="label-arrow" d="M 228 102 L 222 108 L 226 112"></path>
+              </g>
             </g>
           </svg>
         </div>
