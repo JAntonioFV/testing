@@ -598,19 +598,17 @@
       width: clamp(285px, 46vw, 520px);
       aspect-ratio: 1.58 / 1;
       opacity: 0;
-      transform: translate(-50%, 16px) scale(0.82);
+      transform: translate(-50%, 30px) scale(0.78);
       transition:
-        opacity 0.55s ease,
-        transform 0.72s cubic-bezier(0.2, 1.35, 0.4, 1);
+        opacity 0.85s ease-out,
+        transform 0.95s cubic-bezier(0.34, 1.56, 0.64, 1);
       pointer-events: none;
       user-select: none;
-      filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.14));
     }
 
     .thought-bubble.is-visible {
       opacity: 1;
       transform: translate(-50%, 0) scale(1);
-      animation: thoughtFloat 3.2s ease-in-out infinite 0.8s;
     }
 
     .thought-cloud-svg {
@@ -912,29 +910,98 @@
       }
     }
 
-    @keyframes thoughtFloat {
-      0%, 100% {
-        transform: translate(-50%, 0) scale(1);
+    @keyframes thoughtFloatBreathing {
+      0% {
+        transform: translateY(0) scale(1, 1) rotate(0deg);
       }
-
+      25% {
+        transform: translateY(-9px) scale(1.025, 0.98) rotate(0.4deg);
+      }
       50% {
-        transform: translate(-50%, -5px) scale(1.01);
+        transform: translateY(-2px) scale(0.98, 1.02) rotate(-0.3deg);
       }
+      75% {
+        transform: translateY(-12px) scale(1.018, 0.982) rotate(0.5deg);
+      }
+      100% {
+        transform: translateY(0) scale(1, 1) rotate(0deg);
+      }
+    }
+
+    .thought-bubble-hover-wrapper {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), filter 0.45s ease;
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12));
+    }
+
+    .thought-bubble.is-visible .thought-bubble-hover-wrapper {
+      pointer-events: auto !important;
+      cursor: pointer !important;
+    }
+
+    .thought-bubble.is-visible:hover .thought-bubble-hover-wrapper {
+      transform: translateY(-6px) scale(1.045);
+      filter: drop-shadow(0 16px 32px rgba(255, 79, 139, 0.38));
+    }
+
+    .thought-bubble-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-origin: center center;
+    }
+
+    .thought-bubble.is-visible .thought-bubble-inner {
+      animation: thoughtFloatBreathing 6.5s ease-in-out infinite 0.2s;
     }
 
     /* Redefine is-visible to make thought bubble interactive and glowing on hover */
     .thought-bubble.is-visible {
       opacity: 1;
       transform: translate(-50%, 0) scale(1);
-      animation: thoughtFloat 3.2s ease-in-out infinite 0.8s;
       pointer-events: auto !important;
       cursor: pointer !important;
-      transition: opacity 0.55s ease, transform 0.72s cubic-bezier(0.2, 1.35, 0.4, 1), filter 0.3s ease;
     }
 
-    .thought-bubble.is-visible:hover {
-      filter: drop-shadow(0 8px 20px rgba(255, 79, 139, 0.38));
-      transform: translate(-50%, -4px) scale(1.03);
+    /* Independent organic puff breathing animations */
+    @keyframes puffFloatOne {
+      0%, 100% {
+        transform: rotate(4deg) scale(1) translate(0, 0);
+      }
+      50% {
+        transform: rotate(8deg) scale(1.08) translate(-1px, -2px);
+      }
+    }
+
+    @keyframes puffFloatTwo {
+      0%, 100% {
+        transform: rotate(-8deg) scale(1) translate(0, 0);
+      }
+      50% {
+        transform: rotate(-4deg) scale(1.11) translate(1.5px, -1.5px);
+      }
+    }
+
+    @keyframes puffFloatThree {
+      0%, 100% {
+        transform: rotate(9deg) scale(1) translate(0, 0);
+      }
+      50% {
+        transform: rotate(14deg) scale(1.15) translate(-1px, 2px);
+      }
+    }
+
+    .thought-bubble.is-visible .thought-puff-one {
+      animation: puffFloatOne 4.5s ease-in-out infinite alternate;
+    }
+    
+    .thought-bubble.is-visible .thought-puff-two {
+      animation: puffFloatTwo 3.8s ease-in-out infinite alternate 0.3s;
+    }
+
+    .thought-bubble.is-visible .thought-puff-three {
+      animation: puffFloatThree 3.2s ease-in-out infinite alternate 0.6s;
     }
 
     .thought-bubble.is-popped {
@@ -1164,106 +1231,110 @@
       <img id="treeCharacter" class="tree-character" src="img/personaje-arbol.png" alt="">
 
       <div id="thoughtBubble" class="thought-bubble" aria-hidden="true">
-        <svg class="thought-cloud-svg" viewBox="0 0 520 330" aria-hidden="true">
-          <path
-            class="thought-cloud-fill"
-            d="M 260 62
-               C 290 54, 325 58, 350 82
-               C 380 75, 420 92, 435 125
-               C 450 155, 455 185, 435 215
-               C 415 245, 380 255, 350 252
-               C 325 272, 290 274, 260 268
-               C 230 274, 195 272, 170 252
-               C 140 255, 105 245, 85 215
-               C 65 185, 70 155, 85 125
-               C 100 92, 140 75, 170 82
-               C 195 58, 230 54, 260 62 Z"
-          />
-          <path
-            class="thought-cloud-line"
-            d="M 260 62
-               C 290 54, 325 58, 350 82
-               C 380 75, 420 92, 435 125
-               C 450 155, 455 185, 435 215
-               C 415 245, 380 255, 350 252
-               C 325 272, 290 274, 260 268
-               C 230 274, 195 272, 170 252
-               C 140 255, 105 245, 85 215
-               C 65 185, 70 155, 85 125
-               C 100 92, 140 75, 170 82
-               C 195 58, 230 54, 260 62 Z"
-          />
-        </svg>
-
-        <div class="thought-story">
-          <svg class="stick-story" viewBox="0 0 320 170" aria-hidden="true">
-            <g class="story-scene story-scene-couple">
-              <g class="stick-boy">
-                <circle cx="114" cy="61" r="12"></circle>
-                <!-- Eyes -->
-                <circle class="stick-eye" cx="110" cy="58" r="2"></circle>
-                <circle class="stick-eye" cx="118" cy="58" r="2"></circle>
-                <!-- Smile -->
-                <path class="stick-smile" d="M110 65 Q114 70 118 65"></path>
-                
-                <!-- Spine/Torso -->
-                <path d="M114 73 L114 96"></path>
-                <!-- Arms -->
-                <path d="M114 84 L96 97"></path>
-                <path d="M114 84 L131 96"></path>
-                <!-- Shorts -->
-                <path class="stick-shorts" d="M100 96 L128 96 L128 114 L119 114 L114 105 L109 114 L100 114 Z"></path>
-                <!-- Legs -->
-                <path d="M104 114 L100 132"></path>
-                <path d="M124 114 L128 132"></path>
-                <!-- Hair -->
-                <path class="boy-hair" d="M105 55 C111 46 123 47 128 57"></path>
-              </g>
-
-              <g class="stick-girl">
-                <circle cx="206" cy="61" r="12"></circle>
-                <!-- Eyes -->
-                <circle class="stick-eye" cx="202" cy="58" r="2"></circle>
-                <circle class="stick-eye" cx="210" cy="58" r="2"></circle>
-                <!-- Smile -->
-                <path class="stick-smile" d="M202 65 Q206 70 210 65"></path>
-                <!-- Bow on head -->
-                <path class="stick-bow" d="M197 47 L190 41 L193 51 Z M197 47 L204 41 L201 51 Z"></path>
-                <!-- Dress/Skirt -->
-                <path class="stick-dress" d="M206 73 L188 114 L224 114 Z"></path>
-                <!-- Arms -->
-                <path d="M206 84 L189 96"></path>
-                <path d="M206 84 L224 96"></path>
-                <!-- Legs -->
-                <path d="M198 114 L194 132"></path>
-                <path d="M214 114 L218 132"></path>
-              </g>
-
-              <!-- Multiple kissing hearts that float sequentially with staggered keyframes -->
-              <path class="kiss-heart heart-1" d="M156 46 C156 39 164 37 167 42 C170 37 178 39 178 46 C178 55 167 61 167 61 C167 61 156 55 156 46 Z"></path>
-              <path class="kiss-heart heart-2" d="M154 44 C154 36 163 34 167 39 C171 34 180 36 180 44 C180 54 167 61 167 61 C167 61 154 54 154 44 Z"></path>
-              <path class="kiss-heart heart-3" d="M157 47 C157 41 164 39 167 43 C170 39 177 41 177 47 C177 55 167 61 167 61 C167 61 157 55 157 47 Z"></path>
-
-              <!-- Name labels with short, cute pointing arrows that appear during the kissing sequence -->
-              <g class="label-juan">
-                <text x="75" y="135" class="label-text">Juan</text>
-                <path class="label-arrow" d="M 75 120 Q 88 110 98 108"></path>
-                <path class="label-arrow" d="M 92 112 L 98 108 L 94 102"></path>
-              </g>
-
-              <g class="label-fer">
-                <text x="245" y="135" class="label-text">Fer</text>
-                <path class="label-arrow" d="M 245 120 Q 232 110 222 108"></path>
-                <path class="label-arrow" d="M 228 102 L 222 108 L 226 112"></path>
-              </g>
-            </g>
+        <div class="thought-bubble-hover-wrapper">
+          <div class="thought-bubble-inner">
+          <svg class="thought-cloud-svg" viewBox="0 0 520 330" aria-hidden="true">
+            <path
+              class="thought-cloud-fill"
+              d="M 260 62
+                 C 290 54, 325 58, 350 82
+                 C 380 75, 420 92, 435 125
+                 C 450 155, 455 185, 435 215
+                 C 415 245, 380 255, 350 252
+                 C 325 272, 290 274, 260 268
+                 C 230 274, 195 272, 170 252
+                 C 140 255, 105 245, 85 215
+                 C 65 185, 70 155, 85 125
+                 C 100 92, 140 75, 170 82
+                 C 195 58, 230 54, 260 62 Z"
+            />
+            <path
+              class="thought-cloud-line"
+              d="M 260 62
+                 C 290 54, 325 58, 350 82
+                 C 380 75, 420 92, 435 125
+                 C 450 155, 455 185, 435 215
+                 C 415 245, 380 255, 350 252
+                 C 325 272, 290 274, 260 268
+                 C 230 274, 195 272, 170 252
+                 C 140 255, 105 245, 85 215
+                 C 65 185, 70 155, 85 125
+                 C 100 92, 140 75, 170 82
+                 C 195 58, 230 54, 260 62 Z"
+            />
           </svg>
-        </div>
 
-        <span class="thought-puff thought-puff-one"></span>
-        <span class="thought-puff thought-puff-two"></span>
-        <span class="thought-puff thought-puff-three"></span>
+          <div class="thought-story">
+            <svg class="stick-story" viewBox="0 0 320 170" aria-hidden="true">
+              <g class="story-scene story-scene-couple">
+                <g class="stick-boy">
+                  <circle cx="114" cy="61" r="12"></circle>
+                  <!-- Eyes -->
+                  <circle class="stick-eye" cx="110" cy="58" r="2"></circle>
+                  <circle class="stick-eye" cx="118" cy="58" r="2"></circle>
+                  <!-- Smile -->
+                  <path class="stick-smile" d="M110 65 Q114 70 118 65"></path>
+                  
+                  <!-- Spine/Torso -->
+                  <path d="M114 73 L114 96"></path>
+                  <!-- Arms -->
+                  <path d="M114 84 L96 97"></path>
+                  <path d="M114 84 L131 96"></path>
+                  <!-- Shorts -->
+                  <path class="stick-shorts" d="M100 96 L128 96 L128 114 L119 114 L114 105 L109 114 L100 114 Z"></path>
+                  <!-- Legs -->
+                  <path d="M104 114 L100 132"></path>
+                  <path d="M124 114 L128 132"></path>
+                  <!-- Hair -->
+                  <path class="boy-hair" d="M105 55 C111 46 123 47 128 57"></path>
+                </g>
+
+                <g class="stick-girl">
+                  <circle cx="206" cy="61" r="12"></circle>
+                  <!-- Eyes -->
+                  <circle class="stick-eye" cx="202" cy="58" r="2"></circle>
+                  <circle class="stick-eye" cx="210" cy="58" r="2"></circle>
+                  <!-- Smile -->
+                  <path class="stick-smile" d="M202 65 Q206 70 210 65"></path>
+                  <!-- Bow on head -->
+                  <path class="stick-bow" d="M197 47 L190 41 L193 51 Z M197 47 L204 41 L201 51 Z"></path>
+                  <!-- Dress/Skirt -->
+                  <path class="stick-dress" d="M206 73 L188 114 L224 114 Z"></path>
+                  <!-- Arms -->
+                  <path d="M206 84 L189 96"></path>
+                  <path d="M206 84 L224 96"></path>
+                  <!-- Legs -->
+                  <path d="M198 114 L194 132"></path>
+                  <path d="M214 114 L218 132"></path>
+                </g>
+
+                <!-- Multiple kissing hearts that float sequentially with staggered keyframes -->
+                <path class="kiss-heart heart-1" d="M156 46 C156 39 164 37 167 42 C170 37 178 39 178 46 C178 55 167 61 167 61 C167 61 156 55 156 46 Z"></path>
+                <path class="kiss-heart heart-2" d="M154 44 C154 36 163 34 167 39 C171 34 180 36 180 44 C180 54 167 61 167 61 C167 61 154 54 154 44 Z"></path>
+                <path class="kiss-heart heart-3" d="M157 47 C157 41 164 39 167 43 C170 39 177 41 177 47 C177 55 167 61 167 61 C167 61 157 55 157 47 Z"></path>
+
+                <!-- Name labels with short, cute pointing arrows that appear during the kissing sequence -->
+                <g class="label-juan">
+                  <text x="75" y="135" class="label-text">Juan</text>
+                  <path class="label-arrow" d="M 75 120 Q 88 110 98 108"></path>
+                  <path class="label-arrow" d="M 92 112 L 98 108 L 94 102"></path>
+                </g>
+
+                <g class="label-fer">
+                  <text x="245" y="135" class="label-text">Fer</text>
+                  <path class="label-arrow" d="M 245 120 Q 232 110 222 108"></path>
+                  <path class="label-arrow" d="M 228 102 L 222 108 L 226 112"></path>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <span class="thought-puff thought-puff-one"></span>
+          <span class="thought-puff thought-puff-two"></span>
+          <span class="thought-puff thought-puff-three"></span>
+        </div>
       </div>
+    </div>
 
       <img class="scene-two-tree-front" src="img/escena2-arbol-frente.png" alt="">
     </section>
@@ -1586,15 +1657,10 @@
         // Añadir clase de animación de pincharse (punzadura de la nube)
         thoughtBubble.classList.add("is-popped");
 
-        // Iniciar el blackout con la frase romántica final, imitando el tiempo de transición del primero y dejando en negro
+        // Iniciar el blackout con la frase romántica de transición recreando el mismo comportamiento unificado
         window.setTimeout(() => {
-          const messageEl = blackout.querySelector(".blackout-message");
-          messageEl.textContent = "Ella te eligió a ti, me tocaba a mi hacerlo...";
-          blackout.style.background = "#000"; // Blackout puro en negro
-          blackout.classList.add("is-active");
-
-          window.setTimeout(() => {
-            // Detener el runner y ocultar Escena Dos (limpiar la escena y preparar la siguiente/dejar en negro)
+          playBlackoutTransition("Ella te eligió a ti, me tocaba a mi hacerlo...", () => {
+            // Detener el runner y ocultar Escena Dos
             if (runnerFrameTimer) {
               window.clearInterval(runnerFrameTimer);
               runnerFrameTimer = null;
@@ -1608,19 +1674,8 @@
               sceneThree.classList.add("is-active");
               sceneThree.setAttribute("aria-hidden", "false");
             }
-
-            // Iniciar la transición de salida del blackout
-            window.setTimeout(() => {
-              blackout.classList.remove("is-active");
-              blackout.classList.add("is-leaving");
-
-              window.setTimeout(() => {
-                blackout.classList.remove("is-leaving");
-              }, 1800);
-            }, 300); // 300ms delay coincidiendo con el primer blackout
-
-          }, 3000); // El blackout permanece 3s como el primero
-        }, 600); // Permitir que la animación de "pincharse" se aprecie antes del blackout
+          });
+        }, 650); // Permitir que la animación de "pincharse" se aprecie antes de tapar con blackout
       };
     }
 
@@ -1734,31 +1789,45 @@
       }, 2000);
     }
 
-    function startBlackout() {
+    // Función reutilizable unificada de transición de blackout para todas las transiciones
+    function playBlackoutTransition(message, onMidwayCallback) {
       if (blackoutStarted) return;
-
       blackoutStarted = true;
 
-      window.setTimeout(() => {
-        blackout.classList.add("is-active");
+      const messageEl = blackout.querySelector(".blackout-message");
+      messageEl.textContent = message;
 
+      // Asegurar el reset de cualquier estilo inline o clases pasadas
+      blackout.removeAttribute("style");
+      blackout.classList.remove("is-leaving");
+      blackout.classList.add("is-active");
+
+      // El blackout (fadeToBlack) tarda 1.8 segundos en inundar la pantalla de negro.
+      // Sumamos la permanencia del mensaje en pantalla; a los 3000ms el fondo se cambia
+      window.setTimeout(() => {
+        if (onMidwayCallback) {
+          onMidwayCallback();
+        }
+
+        // Delay de 300ms idéntico al original antes de comenzar la transición de salida
         window.setTimeout(() => {
-          endBlackoutAndLoadNextScene();
-        }, 3000);
-      }, 2600);
+          blackout.classList.remove("is-active");
+          blackout.classList.add("is-leaving");
+
+          window.setTimeout(() => {
+            blackout.classList.remove("is-leaving");
+            blackoutStarted = false; // Permitir que se puedan accionar más transiciones en adelante
+          }, 1800);
+        }, 300);
+
+      }, 3000);
     }
 
-    function endBlackoutAndLoadNextScene() {
-      loadNextScene();
-
+    function startBlackout() {
+      // Retrasar el lanzamiento del primer blackout como en el original (2600ms tras caída)
       window.setTimeout(() => {
-        blackout.classList.remove("is-active");
-        blackout.classList.add("is-leaving");
-
-        window.setTimeout(() => {
-          blackout.classList.remove("is-leaving");
-        }, 1800);
-      }, 300);
+        playBlackoutTransition("Y entonces empezó nuestra historia...", loadNextScene);
+      }, 2600);
     }
 
     function loadNextScene() {
