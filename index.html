@@ -1147,24 +1147,6 @@
       }
     }
 
-    .btn-reset {
-      background: linear-gradient(135deg, #ff4f8b 0%, #ff758f 100%);
-      color: white;
-      border: none;
-      padding: 11px 28px;
-      font-size: 0.95rem;
-      font-weight: bold;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 79, 139, 0.35);
-      transition: all 0.3s ease;
-    }
-
-    .btn-reset:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(255, 79, 139, 0.55);
-    }
-
     @media (max-width: 700px) {
       .scene-two-bg {
         object-position: 42% center;
@@ -1190,7 +1172,7 @@
       }
 
       .thought-puff-one {
-        right: 30%
+        right: 30%;
         bottom: -10%;
       }
 
@@ -1318,7 +1300,14 @@
 
       <img id="treeCharacter" class="tree-character" src="img/personaje-arbol.png" alt="">
 
-      <div id="thoughtBubble" class="thought-bubble" aria-hidden="true">
+      <div
+        id="thoughtBubble"
+        class="thought-bubble"
+        role="button"
+        tabindex="0"
+        aria-label="Continuar la historia"
+        aria-hidden="true"
+      >
         <div class="thought-bubble-hover-wrapper">
           <div class="thought-bubble-inner">
           <svg class="thought-cloud-svg" viewBox="0 0 520 330" aria-hidden="true">
@@ -1502,6 +1491,7 @@
     const activeClouds = new Set();
 
     let blackoutStarted = false;
+    let blackoutScheduled = false;
     let cloudIntervalId = null;
     let runnerFrame = 0;
     let runnerFrameTimer = null;
@@ -1568,8 +1558,7 @@
     }
 
     function startClouds() {
-      cloudField.innerHTML = "";
-      activeClouds.clear();
+      stopClouds();
 
       const fragment = document.createDocumentFragment();
 
@@ -1723,6 +1712,7 @@
       if (runnerLaps >= 2 && !thoughtBubbleShown) {
         thoughtBubbleShown = true;
         thoughtBubble.classList.add("is-visible");
+        thoughtBubble.setAttribute("aria-hidden", "false");
         setupThoughtBubbleInteraction();
       }
 
@@ -1737,42 +1727,44 @@
 
     // Configura la interacción táctil y clic sobre la nube de pensamientos en Escena Dos
     function setupThoughtBubbleInteraction() {
-      thoughtBubble.onclick = null;
-      thoughtBubble.onclick = (e) => {
-        // Bloquear múltiples clics
+      const activateThoughtBubble = () => {
         thoughtBubble.onclick = null;
+        thoughtBubble.onkeydown = null;
+        thoughtBubble.setAttribute("aria-hidden", "true");
 
-        // Disparar las explosiones orgánicas de humo y corazones
-        createSmokeBurst(e);
-        createHeartBurst(e);
+        createSmokeBurst();
+        createHeartBurst();
 
-        // Añadir clase de animación de pincharse (punzadura de la nube / desvanecimiento smoke)
         thoughtBubble.classList.add("is-popped");
 
-        // Iniciar el blackout con la frase romántica de transición recreando el mismo comportamiento unificado
         window.setTimeout(() => {
           playBlackoutTransition("Ella te eligió a ti, me tocaba a mi hacerlo...", () => {
-            // Detener el runner y ocultar Escena Dos
             if (runnerFrameTimer) {
               window.clearInterval(runnerFrameTimer);
               runnerFrameTimer = null;
             }
+            clearRunnerRouteClasses();
             sceneTwo.classList.remove("is-active");
             sceneTwo.setAttribute("aria-hidden", "true");
 
-            // Mostrar y preparar Escena Tres
             const sceneThree = document.getElementById("sceneThree");
             if (sceneThree) {
               sceneThree.classList.add("is-active");
               sceneThree.setAttribute("aria-hidden", "false");
             }
           });
-        }, 650); // Permitir que la animación de "pincharse" se aprecie antes de tapar con blackout
+        }, 650);
+      };
+
+      thoughtBubble.onclick = activateThoughtBubble;
+      thoughtBubble.onkeydown = (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        activateThoughtBubble();
       };
     }
 
-    // Genera partículas de humo orgánico simulando dispersión gaseosa
-    function createSmokeBurst(e) {
+    function createSmokeBurst() {
       const rect = thoughtBubble.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height * 0.45;
@@ -1818,8 +1810,7 @@
       }
     }
 
-    // Genera partículas en cascada de corazones de colores flotantes
-    function createHeartBurst(e) {
+    function createHeartBurst() {
       const rect = thoughtBubble.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 3.2;
@@ -1855,63 +1846,6 @@
       }
     }
 
-    // Reinicia la experiencia para volver al dulce inicio utilizando el sistema blackout unificado
-    function resetExperience() {
-      // Ocultar botón de reinicio antes del fundido
-      const resetBtn = document.getElementById("blackoutResetBtn");
-      if (resetBtn) {
-        resetBtn.style.opacity = "0";
-        resetBtn.style.pointerEvents = "none";
-      }
-
-      playBlackoutTransition("Regresando al dulce inicio...", () => {
-        // Reajustar todas las variables clave del runner de Escena Dos
-        runnerLaps = 0;
-        treeCharacterShown = false;
-        thoughtBubbleShown = false;
-        treeCharacter.classList.remove("is-visible");
-        thoughtBubble.classList.remove("is-visible");
-        thoughtBubble.classList.remove("is-popped");
-        thoughtBubble.onclick = null;
-        stringKnot.classList.remove("is-hidden");
-
-        // Limpiar Escena Tres
-        const sceneThree = document.getElementById("sceneThree");
-        if (sceneThree) {
-          sceneThree.classList.remove("is-active");
-          sceneThree.setAttribute("aria-hidden", "true");
-        }
-
-        if (runnerFrameTimer) {
-          window.clearInterval(runnerFrameTimer);
-          runnerFrameTimer = null;
-        }
-
-        // Reajustar globos táctiles de la Escena Uno
-        document.querySelectorAll(".balloon-input").forEach((input) => {
-          input.checked = false;
-        });
-        document.querySelectorAll(".balloon").forEach((b) => {
-          b.classList.remove("is-popped");
-        });
-        document.querySelectorAll(".strings-svg line").forEach((l) => {
-          l.classList.remove("is-hidden");
-        });
-
-        bobbingContainer.style.animation = "";
-        setCharacterMood(0);
-
-        // Regresar la lona del cielo general a escena uno
-        skyCanvas.classList.remove("is-next-scene");
-
-        // Volver a disparar el renderizado básico
-        startClouds();
-        startBalloons();
-        startSceneOne();
-      });
-    }
-
-    // Función reutilizable unificada de transición de blackout para todas las transiciones
     function playBlackoutTransition(message, onMidwayCallback) {
       if (blackoutStarted) return;
       blackoutStarted = true;
@@ -1946,7 +1880,9 @@
     }
 
     function startBlackout() {
-      // Retrasar el lanzamiento del primer blackout como en el original (2600ms tras caída)
+      if (blackoutScheduled) return;
+      blackoutScheduled = true;
+
       window.setTimeout(() => {
         playBlackoutTransition("Y entonces empezó nuestra historia...", loadNextScene);
       }, 2600);
@@ -1985,7 +1921,14 @@
         return result;
       });
 
-      return Promise.all(promises);
+      const results = await Promise.all(promises);
+      const failedAssets = results.filter(({ ok }) => !ok);
+
+      if (failedAssets.length) {
+        console.warn("No se pudieron cargar estos recursos:", failedAssets.map(({ src }) => src));
+      }
+
+      return results;
     }
 
     function hideLoader() {
