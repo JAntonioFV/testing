@@ -476,6 +476,18 @@
       pointer-events: auto;
     }
 
+    .scene-three-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
     .scene-two-bg {
       position: absolute;
       inset: 0;
@@ -1416,13 +1428,15 @@
       <img class="scene-two-tree-front" src="img/escena2-arbol-frente.png" alt="">
     </section>
 
-    <!-- Escena Tres: Fondo Negro Preparatorio -->
+    <!-- Escena Tres: Cocina -->
     <section id="sceneThree" class="scene-three" aria-hidden="true">
+      <img class="scene-three-bg" src="img/escena3-cocina.png" alt="">
     </section>
   </main>
 
   <script>
     const SCENE_ONE_START_DELAY = 900;
+    const PREVIEW_SCENE_THREE = false;
     const CLOUD_COUNT = 25;
     const RUNNER_FRAME_COUNT = 49;
     const RUNNER_COLUMNS = 7;
@@ -1448,6 +1462,7 @@
       "img/novia-run-sprite.png",
       "img/escena2-fondo.png",
       "img/escena2-arbol-frente.png",
+      "img/escena3-cocina.png",
       "img/ciudad-delantera.png",
       "img/personaje-arbol.png"
     ];
@@ -1940,6 +1955,13 @@
       await loadAssets(assetsToLoad);
 
       hideLoader();
+
+      if (PREVIEW_SCENE_THREE) {
+        skyCanvas.classList.add("is-next-scene");
+        document.getElementById("sceneThree").classList.add("is-active");
+        document.getElementById("sceneThree").setAttribute("aria-hidden", "false");
+        return;
+      }
 
       character.src = characterStates[0];
       setRunnerFrame(0);
